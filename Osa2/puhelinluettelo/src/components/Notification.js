@@ -1,19 +1,21 @@
-const Notification = ({ message }) => {
-    if (message === null){ 
+const Notification = ({ message, boolean }) => {
+    if (message === null) {
         return null
     }
-  
-    if (message.includes("has")) {
-      return (
-      <div className="error">
-        {message}
-      </div>
-    )}
-  
-    return (
-    <div className="success">
-      {message}
-    </div>
-  )}
 
-  export default Notification;
+    if (boolean)
+        return (
+            <div className="error">
+                {message}
+            </div>
+        )
+
+    if (!boolean)
+        return (
+            <div className="addedMessage">
+                {message}
+            </div>
+        )
+}
+
+export default Notification

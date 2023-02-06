@@ -1,15 +1,16 @@
-const Persons = ({ personsShow, deletePerson }) => {
+
+const Persons = ({ contactsToShow, removeContact }) => {
     return (
-      <div>
-        {personsShow.map((person) => (
-          <div key={person.name}>
-            {person.name} {person.number}{" "}
-            <button onClick={() => deletePerson(person.id, person.name)}>
-              delete
-            </button>
-          </div>
-        ))}
-      </div>
-    )}
-  
-  export default Persons
+        contactsToShow.map(person =>
+            <div key={person.name}>
+                {person.name} {person.number}
+                <button value={person.id} onClick={() => removeContact(person.id)}>
+                    delete
+                </button>
+            </div>
+
+        )
+    )
+}
+
+export default Persons
