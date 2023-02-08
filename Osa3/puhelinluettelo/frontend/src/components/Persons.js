@@ -1,4 +1,3 @@
-
 const Persons = ({ contactsToShow, removeContact }) => {
     return (
         contactsToShow.map(person =>

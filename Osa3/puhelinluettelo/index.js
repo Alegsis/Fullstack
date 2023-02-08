@@ -12,13 +12,6 @@ app.use(express.static('build'))
 
 const GenereteId = () => Math.floor(Math.random() * 10000)
 
-app.get('/api/persons', (req, res) => {
-    Person.find({}).then(persons => {
-        res.json(persons)
-    })
-
-})
-
 app.get('/info', (req, res) => {
 
     Person.find().count(function (err, count) {
@@ -28,6 +21,12 @@ app.get('/info', (req, res) => {
             `<p> ${new Date()} </p>`
         )
     })
+})
+app.get('/api/persons', (req, res) => {
+    Person.find({}).then(persons => {
+        res.json(persons)
+    })
+
 })
 
 app.get('/api/persons/:id', (req, res, next) => {
@@ -44,13 +43,6 @@ app.get('/api/persons/:id', (req, res, next) => {
         })
 })
 
-app.delete('/api/persons/:id', (req, res, next) => {
-    Person.findByIdAndRemove(req.params.id)
-        .then(result => {
-            res.status(204).end()
-        })
-        .catch(error => next(error))
-})
 app.post('/api/persons', (req, res, next) => {
     const body = req.body
 
@@ -73,6 +65,13 @@ app.post('/api/persons', (req, res, next) => {
     person.save().then(savedPerson => {
         res.json(savedPerson)
     })
+        .catch(error => next(error))
+})
+app.delete('/api/persons/:id', (req, res, next) => {
+    Person.findByIdAndRemove(req.params.id)
+        .then(result => {
+            res.status(204).end()
+        })
         .catch(error => next(error))
 })
 
