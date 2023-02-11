@@ -17,7 +17,7 @@ beforeEach(async () => {
 
 describe('bloglist tests', () => {
 
-    test('blogs are returned as json and length is 3', async () => {
+    test('blogs returned are json and length is 3', async () => {
         const response = await api.get('/api/blogs').expect(200).expect('Content-Type', /application\/json/)
         expect(Object.keys(response.body).length === 3)
     })
@@ -40,13 +40,13 @@ describe('bloglist tests', () => {
         expect(title).toContain('Go To Statement Considered Harmful')
     })
 
-    test('correct id exists', async () => {
+    test('correct id of blog exists', async () => {
         const response = await api.get('/api/blogs')
         expect(response.body[0].id).toBeDefined()
     })
 
 
-    test('if likes is empty, set zero', async () => {
+    test('if blog have zero likes', async () => {
         const newBlog = {
             title: 'Go To Statement Considered Harmful',
             author: 'Edsger W. Dijkstra',
@@ -59,7 +59,7 @@ describe('bloglist tests', () => {
         expect(responseAfter.body.at(-1).likes === 0)
     })
 
-    test('return 400 if url and title are empty', async () => {
+    test('if url and title are empty return 400', async () => {
         const newBlog = {
             author: 'Edsger W. Dijkstra',
             likes: 5
@@ -67,13 +67,13 @@ describe('bloglist tests', () => {
         await api.post('/api/blogs').send(newBlog).set('Authorization', authorization).expect(400)
     })
 
-    test('delete specific blog', async () => {
+    test('specific blog can be deleted', async () => {
         const response = await api.get('/api/blogs')
         const deleteID = response.body.at(-1).id
         await api.delete(`/api/blogs/${deleteID}`).set('Authorization', authorization).expect(204)
     })
 
-    test('update specific blog', async () => {
+    test('specific blog can be updated', async () => {
         const response = await api.get('/api/blogs')
         const putID = response.body.at(-1).id
         const updateLikes = {
@@ -85,7 +85,7 @@ describe('bloglist tests', () => {
         expect(responseAfter.body.at(-1).likes === 199)
     })
 
-    test('return 400 error if username or password are less than three characters', async () => {
+    test('if username or password are less than three characters return error 400', async () => {
         const newUser = {
             username: 'He',
             name: 'Arto Hellas',
@@ -94,7 +94,7 @@ describe('bloglist tests', () => {
         await api.post('/api/users').send(newUser).expect(400)
     })
 
-    test('return 400 error if username exists', async () => {
+    test('if username already exists return error 400', async () => {
         const newUser = {
             username: 'hellas',
             name: 'Arto Hellas',

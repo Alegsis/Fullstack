@@ -8,7 +8,7 @@ test('dummy returns one', () => {
 })
 
 describe('total likes', () => {
-    const listWithOneBlog = [
+    const oneBlog = [
         {
             _id: '5a422aa71b54a676234d17f8',
             title: 'Go To Statement Considered Harmful',
@@ -70,27 +70,27 @@ describe('total likes', () => {
         }
     ]
 
-    test('of empty list is zero', () => {
+    test('empty list is zero', () => {
         const result = listHelper.totalLikes([])
         expect(result).toBe(0)
     })
-    test('when list has only one blog equals the likes of that', () => {
-        const result = listHelper.totalLikes(listWithOneBlog)
+    test('one bloglist equals likes of that', () => {
+        const result = listHelper.totalLikes(oneBlog)
         expect(result).toBe(5)
     })
-    test('of a bigger list is calculated right', () => {
+    test('total likes of bloglist', () => {
         const result = listHelper.totalLikes(blogs)
         expect(result).toBe(36)
     })
-    test('test favorite blog', () => {
+    test('most likes on blog', () => {
         const result = listHelper.favoriteBlog(blogs)
         expect(result.likes).toBe(12)
     })
-    test('test most blogs', () => {
+    test('most blogs by author', () => {
         const result = listHelper.mostBlogs(blogs)
         expect(result.author).toBe("Robert C. Martin")
     })
-    test('test most blog likes by author', () => {
+    test('most blog likes by author', () => {
         const result = listHelper.mostLikes(blogs)
         expect(result.author).toBe("Edsger W. Dijkstra")
     })
