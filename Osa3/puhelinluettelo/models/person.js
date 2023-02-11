@@ -1,11 +1,9 @@
 const mongoose = require('mongoose')
 const url = process.env.MONGODB_URI
-
 mongoose.connect(url)
     .then(result => {
         console.log('connected to MongoDB')
-    })
-    .catch((error) => {
+    }).catch((error) => {
         console.log('error connecting to MongoDB:', error.message)
     })
 
@@ -17,7 +15,6 @@ const personSchema = new mongoose.Schema({
     number: {
         type: String,
         minlength: 8,
-
         validate: function(v) {
             return /^(\d{2}-\d{6,})|(\d{3}-\d{5,})$/.test(v)
         }

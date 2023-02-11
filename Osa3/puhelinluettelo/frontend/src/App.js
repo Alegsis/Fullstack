@@ -9,7 +9,7 @@ const App = () => {
     const [persons, setPersons] = useState([])
     const [newName, setNewName] = useState('')
     const [newNumber, setNewNumber] = useState('')
-    const [filter, setNewFilter] = useState('')
+    const [filter, setFilter] = useState('')
     const [message, setMessage] = useState(null)
     const [error, setError] = useState(true)
 
@@ -78,7 +78,7 @@ const App = () => {
                 })
         }
     }
-    const removeContact = (id) => {
+    const contactsRemove = (id) => {
         if (window.confirm(`Delete ${persons.find(person => person.id === id).name} ?`)) {
             contacts.remove(id)
                 .then(returnedContact => {
@@ -86,11 +86,11 @@ const App = () => {
                 })
         }
     }
-    const handleNameChange = (event) => setNewName(event.target.value)
-    const handleNumberChange = (event) => setNewNumber(event.target.value)
-    const handleFilterChange = (event) => setNewFilter(event.target.value)
+    const nameChange = (event) => setNewName(event.target.value)
+    const numberChange = (event) => setNewNumber(event.target.value)
+    const filterChange = (event) => setFilter(event.target.value)
 
-    const contactsToShow = filter === ''
+    const contactsShow = filter === ''
         ? persons
         : persons.filter(person => person.name.includes(filter))
 
@@ -100,13 +100,13 @@ const App = () => {
         <div>
             <h1>Phonebook</h1>
             <Notification message={message} boolean={error} />
-            <Filter value={filter} onChange={handleFilterChange} />
+            <Filter value={filter} onChange={filterChange} />
             <h2>Add new contact</h2>
             <PersonForm newName={newName} newNumber={newNumber}
-                        handleNameChange={handleNameChange} handleNumberChange={handleNumberChange}
+                        nameChange={nameChange} numberChange={numberChange}
                         addContact={addContact} />
             <h2>Numbers</h2>
-            <Persons contactsToShow={contactsToShow} removeContact={removeContact} />
+            <Persons contactsShow={contactsShow} contactsRemove={contactsRemove} />
         </div>
     )
 

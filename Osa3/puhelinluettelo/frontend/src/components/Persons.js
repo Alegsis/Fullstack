@@ -1,9 +1,9 @@
-const Persons = ({ contactsToShow, removeContact }) => {
+const Persons = ({ contactsShow, contactsRemove }) => {
     return (
-        contactsToShow.map(person =>
+        contactsShow.map(person =>
             <div key={person.name}>
                 {person.name} {person.number}
-                <button value={person.id} onClick={() => removeContact(person.id)}>
+                <button value={person.id} onClick={() => contactsRemove(person.id)}>
                     delete
                 </button>
             </div>
