@@ -85,11 +85,19 @@ describe('bloglist tests', () => {
         expect(responseAfter.body.at(-1).likes === 199)
     })
 
-    test('if username or password are less than three characters return error 400', async () => {
+    test('if username is less than three characters return error 400', async () => {
         const newUser = {
             username: 'He',
             name: 'Arto Hellas',
             password: 'test123'
+        }
+        await api.post('/api/users').send(newUser).expect(400)
+    })
+    test('if password is less than three characters return error 400', async () => {
+        const newUser = {
+            username: 'Hellas',
+            name: 'Arto Hellas',
+            password: 't'
         }
         await api.post('/api/users').send(newUser).expect(400)
     })
