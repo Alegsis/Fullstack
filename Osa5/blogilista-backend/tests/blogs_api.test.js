@@ -34,14 +34,12 @@ describe('when there are some blogs in database', () => {
 
     test('a blog can be deleted', async () => {
         const aBlogAtStart = (await helper.blogsInDb())[0]
-
         await api
             .delete(`/api/blogs/${aBlogAtStart.id}`)
             .expect(204)
 
         const blogsAtEnd = await helper.blogsInDb()
         expect(blogsAtEnd).toHaveLength(helper.initialBlogs.length - 1)
-
         const titles = blogsAtEnd.map(b => b.title)
         expect(titles).not.toContain(aBlogAtStart.title)
     })
@@ -52,7 +50,6 @@ describe('when there are some blogs in database', () => {
             ...aBlogAtStart,
             likes: 99
         }
-
         await api
             .put(`/api/blogs/${aBlogAtStart.id}`)
             .send(editedBlog)
@@ -67,12 +64,9 @@ describe('when there are some blogs in database', () => {
         let token
         beforeEach(async () => {
             await User.deleteMany({})
-
             const passwordHash = await bcrypt.hash('sekret', 10)
             const user = new User({ username: 'root', passwordHash })
-
             await user.save()
-
             const response = await api
                 .post('/api/login')
                 .send({ username: 'root', password: 'sekret' })
@@ -87,17 +81,14 @@ describe('when there are some blogs in database', () => {
                 url: 'www.google.com',
                 likes: 7
             }
-
             await api
                 .post('/api/blogs')
                 .send(newBlog)
                 .set('Authorization', `bearer ${token}`)
                 .expect(201)
                 .expect('Content-Type', /application\/json/)
-
             const blogsAtEnd = await helper.blogsInDb()
             expect(blogsAtEnd).toHaveLength(helper.initialBlogs.length + 1)
-
             const titles = blogsAtEnd.map(b => b.title)
             expect(titles).toContain('Benefits of Scrumban')
         })
@@ -107,14 +98,12 @@ describe('when there are some blogs in database', () => {
                 author: 'Kalle Ilves',
                 likes: 7
             }
-
             await api
                 .post('/api/blogs')
                 .send(newBlog)
                 .set('Authorization', `bearer ${token}`)
                 .expect(400)
                 .expect('Content-Type', /application\/json/)
-
             const blogsAtEnd = await helper.blogsInDb()
             expect(blogsAtEnd).toHaveLength(helper.initialBlogs.length)
         })
@@ -124,10 +113,8 @@ describe('when there are some blogs in database', () => {
 describe('user creation', () => {
     beforeEach(async () => {
         await User.deleteMany({})
-
         const passwordHash = await bcrypt.hash('sekret', 10)
         const user = new User({ username: 'root', passwordHash })
-
         await user.save()
     })
 
@@ -136,7 +123,6 @@ describe('user creation', () => {
             username: 'mo',
             pasword: 'sekred'
         }
-
         await api
             .post('/api/users')
             .send(newUser)
@@ -149,7 +135,6 @@ describe('user creation', () => {
             username: 'kalle',
             pasword: 'p'
         }
-
         await api
             .post('/api/users')
             .send(newUser)
@@ -163,7 +148,6 @@ describe('user creation', () => {
             name: 'Superuser',
             password: 'salainen',
         }
-
         const result = await api
             .post('/api/users')
             .send(newUser)

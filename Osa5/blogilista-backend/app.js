@@ -28,6 +28,11 @@ app.use(express.json())
 app.use('/api/login', loginRouter)
 app.use('/api/blogs', userExtractor, blogsRouter)
 app.use('/api/users', usersRouter)
+//Käytä npm run start:test
+if (process.env.NODE_ENV === 'test') {
+    const router = require('./controllers/testing')
+    app.use('/api/testing', router)
+}
 
 app.use(errorHandler)
 
